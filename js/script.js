@@ -15,6 +15,16 @@
     const currentYear = document.getElementById('current-year'); // Element to display current year in copyright
     const greetingMessage = document.getElementById('greeting-message'); // Personalized greeting message in footer
 
+    // Greeting Bar Elements
+    const greetingBar = document.getElementById('greeting-bar'); // Main greeting bar container
+    const greetingForm = document.getElementById('greeting-form'); // Input form for new users
+    const greetingMessageDisplay = document.getElementById('greeting-message-display'); // Personalized greeting display
+    const userNameInput = document.getElementById('user-name'); // Name input field
+    const saveNameBtn = document.getElementById('save-name'); // Save name button
+    const clearNameBtn = document.getElementById('clear-name'); // Clear name button
+    const editNameBtn = document.getElementById('edit-name'); // Edit name button
+    const displayedName = document.getElementById('displayed-name'); // Span to display saved name
+
     // Application State - Variables that track the current state of the UI
     let isMenuOpen = false; // Tracks whether mobile menu is currently open
     let currentSection = 'home'; // Tracks the currently active section for navigation highlighting
@@ -44,6 +54,154 @@
     function getOffsetTop(element) {
         const rect = element.getBoundingClientRect();
         return rect.top + window.pageYOffset;
+    }
+
+    // ===========================
+    // Greeting Bar Functions
+    // ===========================
+
+    const USER_NAME_KEY = 'portfolio_user_name';
+
+    function saveUserName(name) {
+        try {
+            localStorage.setItem(USER_NAME_KEY, name.trim());
+            return true;
+        } catch (error) {
+            console.error('Error saving name to localStorage:', error);
+            return false;
+        }
+    }
+
+    function getUserName() {
+        try {
+            return localStorage.getItem(USER_NAME_KEY);
+        } catch (error) {
+            console.error('Error getting name from localStorage:', error);
+            return null;
+        }
+    }
+
+    function clearUserName() {
+        try {
+            localStorage.removeItem(USER_NAME_KEY);
+            return true;
+        } catch (error) {
+            console.error('Error clearing name from localStorage:', error);
+            return false;
+        }
+    }
+
+    function showGreetingBar() {
+        if (greetingBar) {
+            greetingBar.classList.add('show');
+        }
+    }
+
+    function hideGreetingBar() {
+        if (greetingBar) {
+            greetingBar.classList.remove('show');
+        }
+    }
+
+    function showGreetingForm() {
+        if (greetingForm && greetingMessageDisplay) {
+            greetingMessageDisplay.style.display = 'none';
+            greetingMessageDisplay.classList.remove('fade-in');
+            
+            greetingForm.style.display = 'flex';
+            setTimeout(() => {
+                greetingForm.classList.add('fade-in');
+            }, 50);
+        }
+    }
+
+    function showGreetingMessage(name) {
+        if (greetingForm && greetingMessageDisplay && displayedName) {
+            displayedName.textContent = name;
+            
+            greetingForm.classList.remove('fade-in');
+            greetingForm.classList.add('fade-out');
+            
+            setTimeout(() => {
+                greetingForm.style.display = 'none';
+                greetingForm.classList.remove('fade-out');
+                
+                greetingMessageDisplay.style.display = 'flex';
+                setTimeout(() => {
+                    greetingMessageDisplay.classList.add('fade-in');
+                }, 50);
+            }, 300);
+        }
+    }
+
+    function handleSaveName() {
+        const name = userNameInput.value.trim();
+        
+        if (!name) {
+            userNameInput.style.borderColor = '#ff6b6b';
+            userNameInput.placeholder = 'Please enter your name';
+            setTimeout(() => {
+                userNameInput.style.borderColor = '';
+                userNameInput.placeholder = 'Your name';
+            }, 2000);
+            return;
+        }
+
+        if (name.length < 2) {
+            userNameInput.style.borderColor = '#ff6b6b';
+            userNameInput.placeholder = 'Name must be at least 2 characters';
+            setTimeout(() => {
+                userNameInput.style.borderColor = '';
+                userNameInput.placeholder = 'Your name';
+            }, 2000);
+            return;
+        }
+
+        if (saveUserName(name)) {
+            showGreetingMessage(name);
+            userNameInput.value = '';
+        } else {
+            console.error('Failed to save name');
+        }
+    }
+
+    function handleClearName() {
+        userNameInput.value = '';
+        userNameInput.focus();
+    }
+
+    function handleEditName() {
+        const currentName = getUserName();
+        if (currentName) {
+            userNameInput.value = currentName;
+            showGreetingForm();
+            setTimeout(() => {
+                userNameInput.focus();
+                userNameInput.select();
+            }, 350);
+        }
+    }
+
+    function handleNameInputKeyPress(e) {
+        if (e.key === 'Enter') {
+            handleSaveName();
+        }
+    }
+
+    function initGreetingBar() {
+        if (!greetingBar) return;
+
+        const savedName = getUserName();
+        
+        if (savedName) {
+            showGreetingMessage(savedName);
+        } else {
+            showGreetingForm();
+        }
+
+        setTimeout(() => {
+            showGreetingBar();
+        }, 500);
     }
 
 
@@ -354,6 +512,23 @@
                 closeMobileMenu();
             }
         });
+
+        // Greeting bar event listeners
+        if (saveNameBtn) {
+            saveNameBtn.addEventListener('click', handleSaveName);
+        }
+
+        if (clearNameBtn) {
+            clearNameBtn.addEventListener('click', handleClearName);
+        }
+
+        if (editNameBtn) {
+            editNameBtn.addEventListener('click', handleEditName);
+        }
+
+        if (userNameInput) {
+            userNameInput.addEventListener('keypress', handleNameInputKeyPress);
+        }
     }
 
     // ===========================
@@ -471,6 +646,9 @@
         // Initialize animations
         initSkillAnimations();
         initProjectAnimations();
+
+        // Initialize greeting bar
+        initGreetingBar();
 
         // Set initial active nav link
         setActiveNavLink('home');
