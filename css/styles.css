@@ -242,6 +242,203 @@ button {
 }
 
 /* ===========================
+   Personalized Greeting Bar
+   =========================== */
+
+.greeting-bar {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(17, 26, 23, 0.95) 0%, rgba(39, 54, 49, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 999;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all var(--transition-normal);
+}
+
+.greeting-bar.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.greeting-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.greeting-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.greeting-form-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 500px;
+}
+
+.greeting-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+}
+
+.greeting-input-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.greeting-input {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  transition: all var(--transition-fast);
+}
+
+.greeting-input:focus {
+  outline: none;
+  border-color: var(--accent-kindawhite);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 2px rgba(204, 206, 205, 0.1);
+}
+
+.greeting-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.greeting-btn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+  min-width: 70px;
+}
+
+.save-btn {
+  background-color: var(--accent-kindawhite);
+  color: var(--primary-dark);
+}
+
+.save-btn:hover {
+  background-color: #5d9153;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(82, 197, 88, 0.3);
+}
+
+.clear-btn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.clear-btn:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.3);
+  transform: translateY(-1px);
+}
+
+.edit-btn {
+  background-color: transparent;
+  color: var(--accent-kindawhite);
+  border-color: var(--accent-kindawhite);
+}
+
+.edit-btn:hover {
+  background-color: var(--accent-kindawhite);
+  color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.greeting-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: var(--spacing-sm) 0;
+}
+
+.greeting-text {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.greeting-welcome {
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.linkedin-link {
+  font-size: var(--font-size-lg);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.linkedin-link:hover {
+  background-color: #0077b5;
+  border-color: #0077b5;
+  transform: scale(1.1);
+  box-shadow: 0 3px 10px rgba(0, 119, 181, 0.3);
+}
+
+.greeting-form.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.greeting-message.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.greeting-message.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.greeting-form.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
    Hero Section - Main landing area with name and profile
    =========================== */
 
@@ -251,7 +448,7 @@ button {
   background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
   display: flex;
   align-items: center;
-  padding-top: var(--navbar-height); /* Account for fixed navbar */
+  padding-top: calc(var(--navbar-height) + 80px); /* Account for fixed navbar and greeting bar */
   position: relative;
 }
 
@@ -805,6 +1002,40 @@ button {
   .greeting-message {
     font-size: var(--font-size-base);
     margin-bottom: var(--spacing-md);
+  }
+
+  /* Greeting bar responsive adjustments */
+  .greeting-container {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .greeting-form-content {
+    gap: var(--spacing-sm);
+  }
+
+  .greeting-input-group {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .greeting-input {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .greeting-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .greeting-message {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+
+  .greeting-text {
+    justify-content: center;
   }
 }
 
