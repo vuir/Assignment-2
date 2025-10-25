@@ -36,6 +36,36 @@
         </div>
     </nav>
 
+     <!-- Personalized Greeting Bar -->
+    <div class="greeting-bar" id="greeting-bar">
+        <div class="greeting-container">
+            <!-- Input form for new users -->
+            <div class="greeting-form" id="greeting-form">
+                <div class="greeting-form-content">
+                    <label for="user-name" class="greeting-label">Enter your name:</label>
+                    <div class="greeting-input-group">
+                        <input type="text" id="user-name" class="greeting-input" placeholder="Your name" maxlength="50">
+                        <div class="greeting-buttons">
+                            <button type="button" id="save-name" class="greeting-btn save-btn">Save</button>
+                            <button type="button" id="clear-name" class="greeting-btn clear-btn">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personalized greeting for returning users -->
+            <div class="greeting-message" id="greeting-message-display" style="display: none;">
+                <div class="greeting-text">
+                    <span class="greeting-welcome">Welcome, <span id="displayed-name"></span>! Learn more about me on LinkedIn</span>
+                    <a href="https://www.linkedin.com/in/hayatag" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                        💼
+                    </a>
+                </div>
+                <button type="button" id="edit-name" class="greeting-btn edit-btn">Edit</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section - Main landing area with name and profile image -->
     <section id="home" class="hero">
         <!-- Container to center and constrain hero content width -->
