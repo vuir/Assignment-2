@@ -73,5 +73,3 @@ The goal was to create a more interactive, responsive, and user-friendly portfol
 
 AI tools such as ChatGPT and Cursor AI were valuable in improving both **development efficiency** and **learning depth**.  
 Through guided collaboration, the portfolio evolved into a more interactive, accessible, and polished web application, fully meeting Assignment 2’s goals for **Dynamic Content**, **Data Handling**, **Animations**, and **Error Handling**.
-
----
