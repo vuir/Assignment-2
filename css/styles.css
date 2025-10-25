@@ -256,12 +256,16 @@ button {
   z-index: 999;
   transform: translateY(-100%);
   opacity: 0;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-normal), opacity 0.5s ease;
 }
 
 .greeting-bar.show {
   transform: translateY(0);
   opacity: 1;
+}
+
+.greeting-bar.fade-out {
+  opacity: 0;
 }
 
 .greeting-container {
@@ -535,17 +539,20 @@ button {
   background-color: var(--background-light);
   color: var(--primary-dark);
   padding: var(--spacing-4xl) 0;
+  
+  
 }
 
 .about-content {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--spacing-4xl);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   color: #d8dbd8;
   margin: 0 auto;
-  line-height: 2.2;
+  line-height: 3;
   text-align: center;
+  max-width: 75ch;
 }
 
 

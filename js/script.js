@@ -204,6 +204,22 @@
         }, 500);
     }
 
+    function handleGreetingBarVisibility() {
+        if (!greetingBar) return;
+
+        const homeSection = document.getElementById('home');
+        if (!homeSection) return;
+
+        const homeRect = homeSection.getBoundingClientRect();
+        const isHomeVisible = homeRect.top <= navbar.offsetHeight + 100 && homeRect.bottom > navbar.offsetHeight;
+
+        if (isHomeVisible) {
+            greetingBar.classList.remove('fade-out');
+        } else {
+            greetingBar.classList.add('fade-out');
+        }
+    }
+
 
     // ===========================
     // Navigation Functions
@@ -503,8 +519,11 @@
             });
         });
 
-        // Scroll event for scroll spy
-        window.addEventListener('scroll', debounce(updateActiveNavLink, 100));
+        // Scroll event for scroll spy and greeting bar visibility
+        window.addEventListener('scroll', debounce(() => {
+            updateActiveNavLink();
+            handleGreetingBarVisibility();
+        }, 100));
 
         // Resize event to handle mobile menu
         window.addEventListener('resize', () => {
@@ -652,6 +671,9 @@
 
         // Set initial active nav link
         setActiveNavLink('home');
+
+        // Set initial greeting bar visibility
+        handleGreetingBarVisibility();
 
         // Add loaded class to body for any CSS animations
         document.body.classList.add('loaded');
